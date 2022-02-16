@@ -7,7 +7,7 @@ set -e
 ROOT=$(realpath $(dirname ${0})/..)
 
 # build obs
-if [ ! -f build/libobs/libobs.dylib ]; then
+if [ ! -f build/libobs/libobs.a ]; then
     # generate the builder
     cd ${ROOT}/builders
     cmake \
@@ -31,5 +31,4 @@ fi
 ./node_modules/.bin/node-gyp configure build
 
 # execute the JS script
-DYLD_LIBRARY_PATH=/Users/shiretu/work/interview/builders/build/libobs \
 node ../source/my_module/js/test.js

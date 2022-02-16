@@ -10,7 +10,8 @@
       "defines":["NAPI_DISABLE_CPP_EXCEPTIONS"],
       "libraries": [
           "-L/Users/shiretu/work/interview/builders/build/libobs",
-          "-lobs"
+          "-lobs",
+          "-framework AppKit"
       ]
     }
   ]
