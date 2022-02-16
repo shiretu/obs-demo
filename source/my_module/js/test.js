@@ -1,4 +1,4 @@
-const addon=require('/Users/shiretu/work/interview/builders/build/Release/my_module.node')
+const addon=require('../../../builders/build/Release/my_module.node')
 
 console.log(addon)
 console.log(addon.version())
