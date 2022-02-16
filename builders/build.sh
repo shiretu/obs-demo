@@ -6,10 +6,19 @@ set -e
 # compute the root for the project
 ROOT=$(realpath $(dirname ${0})/..)
 
+# apply the patch first
+if [ ! -f ${ROOT}/3rdparty/.patch.applied ]; then
+    cd ${ROOT}/3rdparty/obs-studio
+    git apply ../001.patch
+    >${ROOT}/3rdparty/.patch.applied
+fi
+
+# go to the proper folder
+cd ${ROOT}/builders
+
 # build obs
 if [ ! -f build/libobs/libobs.a ]; then
     # generate the builder
-    cd ${ROOT}/builders
     cmake \
         -Bbuild \
         -GNinja \

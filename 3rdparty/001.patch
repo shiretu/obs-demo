@@ -1,0 +1,53 @@
+diff --git a/libobs/CMakeLists.txt b/libobs/CMakeLists.txt
+index 2f1150b31..073c20f95 100644
+--- a/libobs/CMakeLists.txt
++++ b/libobs/CMakeLists.txt
+@@ -537,12 +537,15 @@ source_group("util\\Header Files" FILES ${libobs_util_HEADERS})
+ source_group("audio-monitoring\\Source Files" FILES ${libobs_audio_monitoring_SOURCES})
+ source_group("audio-monitoring\\Header Files" FILES ${libobs_audio_monitoring_HEADERS})
+ 
+-include_directories(${CMAKE_SOURCE_DIR}/deps/libcaption)
++include_directories(
++	${CMAKE_SOURCE_DIR}/deps/libcaption
++	${CMAKE_BINARY_DIR}/deps/jansson/include
++	)
+ set(libobs_PLATFORM_DEPS
+ 	${libobs_PLATFORM_DEPS}
+ 	caption)
+ 
+-add_library(libobs SHARED ${libobs_SOURCES} ${libobs_HEADERS} ${libobs_data_EFFECTS})
++add_library(libobs STATIC ${libobs_SOURCES} ${libobs_HEADERS} ${libobs_data_EFFECTS})
+ if(UNIX AND NOT APPLE)
+ 	set(DEST_DIR "${CMAKE_INSTALL_PREFIX}")
+ 	foreach(LIB "obs" "rt")
+@@ -577,14 +580,22 @@ target_include_directories(libobs
+ 		"$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
+ 		"$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/config>"
+ 		"$<INSTALL_INTERFACE:${OBS_INCLUDE_DESTINATION}>")
+-target_link_libraries(libobs
+-	PRIVATE
+-		${libobs_PLATFORM_DEPS}
+-		${libobs_image_loading_LIBRARIES}
+-		${OBS_JANSSON_IMPORT}
+-		${FFMPEG_LIBRARIES}
+-		${ZLIB_LIBRARIES}
+-		Threads::Threads)
++# target_link_libraries(libobs
++# 	PRIVATE
++# 		${libobs_PLATFORM_DEPS}
++# 		${libobs_image_loading_LIBRARIES}
++# 		${OBS_JANSSON_IMPORT}
++# 		${FFMPEG_LIBRARIES}
++# 		${ZLIB_LIBRARIES}
++# 		Threads::Threads
++# 		-lbz2
++# 		"-framework CoreMedia"
++# 		"-framework CoreVideo"
++# 		"-framework Security"
++# 		"-framework VideoToolbox"
++# 		-liconv
++# 		-llzma
++# 		)
+ 
+ install_obs_core(libobs EXPORT LibObs)
+ install_obs_data(libobs data libobs)
